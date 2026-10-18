@@ -1,0 +1,22 @@
+[
+  "tests/test_marketing.py::test_compliance_detects_absolute_and_price_claims",
+  "tests/test_marketing.py::test_confusable_models_trigger_confirmation",
+  "tests/test_marketing.py::test_copy_never_contains_price_or_subsidy",
+  "tests/test_marketing.py::test_every_platform_has_nonempty_title",
+  "tests/test_marketing.py::test_factcheck_flags_fabricated_fact",
+  "tests/test_marketing.py::test_images_are_model_consistent",
+  "tests/test_marketing.py::test_incomplete_input_asks_followup",
+  "tests/test_marketing.py::test_missing_inputs_helper_direct",
+  "tests/test_marketing.py::test_output_has_four_sections",
+  "tests/test_marketing.py::test_platform_change_is_substantive",
+  "tests/test_marketing.py::test_product_facts_verified_against_kb",
+  "tests/test_marketing.py::test_render_report_contains_sections",
+  "tests/test_marketing.py::test_revision_regenerates",
+  "tests/test_marketing.py::test_scene_change_changes_angle",
+  "tests/test_pricing.py::test_ecommerce_excludes_conflicting_subsidy",
+  "tests/test_pricing.py::test_edu_eligibility_changes_price",
+  "tests/test_pricing.py::test_explanation_is_non_empty_and_traceable",
+  "tests/test_pricing.py::test_offline_store_can_stack_national",
+  "tests/test_pricing.py::test_result_is_optimal_by_bruteforce",
+  "tests/test_pricing.py::test_trade_in_adds_device_value"
+]
