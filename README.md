@@ -1,5 +1,3 @@
-# HUAWEI_BioBridge
-
 # AI+华为PC营销软文智能体
 
 面向**华为 PC 营销软文**的一体化自研 Agent：从一句任务输入出发，自动完成
@@ -9,23 +7,23 @@
 > 产品事实与图片素材来自华为官方 PC 知识库（ima 共享知识库「任德耀新建华为PC知识库」）。
 > **未配置任何 Key 也能离线跑通全链路**：无 LLM Key 时走规则/模板兜底，无 ima 凭证时回退到本地已解压的官方知识库。
 
-***
+---
 
 ## 一、对齐赛题的关键点
 
-| 赛题要求                               | 本项目实现                                                                                                                                 |
-| ---------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| 标准流程 9 步                           | [`src/orchestrator.py`](src/orchestrator.py) 主线编排，每步写入 `state.trace`，中断可恢复                                                            |
-| 统一四段输出（场景判断 / 知识库依据 / 图文软文 / 核验结果） | [`render_report()`](src/orchestrator.py) 与界面「③ 图文软文」页籤                                                                                |
-| 4 个发布平台（公众号 / 小红书 / 门店朋友圈 / 门店海报）  | [`config/platforms.json`](config/platforms.json)：结构、语气、图片数量、行动引导逐项不同                                                                  |
-| 8 类业务场景                            | [`config/scenes.json`](config/scenes.json)：切入点与卖点优先级随场景改变                                                                             |
-| ima 接入 4 接口                        | [`src/tools/ima_api.py`](src/tools/ima_api.py)：`search_knowledge_base` → `get_knowledge_list` → `search_knowledge` → `get_media_info` |
-| 图片必须来自知识库且型号一致                     | [`src/tools/image_ref.py`](src/tools/image_ref.py) + 事实核验的「图片型号」结论                                                                    |
-| 系统提示词 8 模块                         | [`prompts/system_prompt.md`](prompts/system_prompt.md)                                                                                |
-| 信息不足要追问                            | [`src/agents/scene.py`](src/agents/scene.py) 的 `missing_inputs()`                                                                     |
-| 修改与导出                              | 界面「修改与导出」：输入修改要求重新生成，并可导出四段 `.txt`                                                                                                    |
+| 赛题要求 | 本项目实现 |
+|---|---|
+| 标准流程 9 步 | [`src/orchestrator.py`](src/orchestrator.py) 主线编排，每步写入 `state.trace`，中断可恢复 |
+| 统一四段输出（场景判断 / 知识库依据 / 图文软文 / 核验结果） | [`render_report()`](src/orchestrator.py) 与界面「③ 图文软文」页籤 |
+| 4 个发布平台（公众号 / 小红书 / 门店朋友圈 / 门店海报） | [`config/platforms.json`](config/platforms.json)：结构、语气、图片数量、行动引导逐项不同 |
+| 8 类业务场景 | [`config/scenes.json`](config/scenes.json)：切入点与卖点优先级随场景改变 |
+| ima 接入 4 接口 | [`src/tools/ima_api.py`](src/tools/ima_api.py)：`search_knowledge_base` → `get_knowledge_list` → `search_knowledge` → `get_media_info` |
+| 图片必须来自知识库且型号一致 | [`src/tools/image_ref.py`](src/tools/image_ref.py) + 事实核验的「图片型号」结论 |
+| 系统提示词 8 模块 | [`prompts/system_prompt.md`](prompts/system_prompt.md) |
+| 信息不足要追问 | [`src/agents/scene.py`](src/agents/scene.py) 的 `missing_inputs()` |
+| 修改与导出 | 界面「修改与导出」：输入修改要求重新生成，并可导出四段 `.txt` |
 
-***
+---
 
 ## 二、快速开始（无需改代码）
 
@@ -48,7 +46,7 @@ pip install -r requirements.txt
 streamlit run src/ui/app.py
 ```
 
-***
+---
 
 ## 三、目录结构
 
@@ -68,7 +66,7 @@ tests/          端到端与单元测试（pytest）
 _official_kb/   本地已解压的华为官方 PC 知识库（离线兜底用）
 ```
 
-***
+---
 
 ## 四、配置（可选，不配也能跑）
 
@@ -85,11 +83,11 @@ IMA_OPENAPI_CLIENTID=
 IMA_OPENAPI_APIKEY=
 ```
 
-- **不填** **`LLM_API_KEY`** → 走规则/模板生成，全链路照常跑通。
+- **不填 `LLM_API_KEY`** → 走规则/模板生成，全链路照常跑通。
 - **不填 ima 凭证** → 回退到本地官方知识库 `_official_kb/`，图片同样取自知识库内的「图片索引.csv」。
 - 若要启用真实 ima 接口：把官方脚本 `ima_api.cjs`（来自 `ima-skills-1.1.10.zip`）解压到项目根目录的 `ima-skill/` 下，再填凭证即可。
 
-***
+---
 
 ## 五、测试
 
@@ -103,16 +101,16 @@ python -m pytest -q     # 全部用例
 赛题「统一测试任务」4 项的操作与预期，见提交材料中的**测试清单**：
 ① 基础生成 ② 换场景 ③ 换平台 ④ 干扰与修改。
 
-***
+---
 
 ## 六、合规与安全
 
 - 软文**不写价格、补贴、销量、奖项、用户评价**（由合规检查模块统一拦截）。
 - 所有事实点均可回溯到知识库原文，虚构或无法确认的内容会标记为「待确认」。
 - 图片均标注**名称 / 来源 / 插入位置 / 说明**，并核验与产品型号一致。
-- **API Key 与 ima 凭证只放** **`.env`（已在** **`.gitignore`** **中排除），源码、界面、导出结果、README 与演示视频中均不出现。**
+- **API Key 与 ima 凭证只放 `.env`（已在 `.gitignore` 中排除），源码、界面、导出结果、README 与演示视频中均不出现。**
 
-***
+---
 
 ## 七、技术栈
 
